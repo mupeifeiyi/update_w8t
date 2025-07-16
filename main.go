@@ -39,8 +39,8 @@ func main() {
 	for i := range alertRules {
 		alertRule := &alertRules[i]
 
-		if len(alertRule.PrometheusConfig.Rules) > 0 {
-			alertRule.PrometheusConfig.Rules[0].ForDuration = alertRule.PrometheusConfig.ForDuration
+		for i := range alertRule.PrometheusConfig.Rules {
+			alertRule.PrometheusConfig.Rules[i].ForDuration = alertRule.PrometheusConfig.ForDuration
 		}
 
 		configBytes, err := json.Marshal(alertRule.PrometheusConfig)
