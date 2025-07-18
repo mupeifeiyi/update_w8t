@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -19,15 +20,16 @@ var (
 )
 
 func usage() {
-	fmt.Println(`用法: update_w8t --dsn=<dsn字符串>
+	progName := os.Args[0]
+	fmt.Printf(`用法: %s --dsn=<dsn字符串>
 
 参数说明：
 --dsn      必填，MySQL连接字符串
 -h         显示帮助信息
 
 示例：
-update_w8t --dsn="root:w8t.123@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local"
-`)
+%s --dsn="root:w8t.123@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local"
+`, progName, progName)
 }
 
 func main() {
