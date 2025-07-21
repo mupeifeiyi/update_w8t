@@ -26,8 +26,15 @@
 <img width="1412" height="497" alt="截屏2025-07-17 22 49 57" src="https://github.com/user-attachments/assets/da0e5523-c863-470c-b754-17cbb4cfffff" />
 
 # 使用方法
+以compose为例的升级步骤：
+1. 使用本项目刷数据库结构
+2. docker compose down
+3. 更新compose文件镜像tag
+4. docker compose up -d
+
+## 本项目刷数据库
 [release](https://github.com/mupeifeiyi/update_w8t/releases)页面查看和WatchAlert对应版本的二进制文件
-下载到部署WatchAlert的服务器中，这里以compose为例
+下载到部署WatchAlert的服务器中
 ```shell
 $ chmod +x u8t-linux-amd64
 $ ./u8t-linux-amd64 -h
@@ -41,7 +48,7 @@ $ ./u8t-linux-amd64 -h
 示例：
 ./u8t-linux-amd64 --dsn="root:w8t.123@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local"
 ```
-部署时没有修改任何配置，可以直接复制示例进行刷数据库，可重复执行
+部署时没有修改任何配置，可以直接复制示例进行刷数据库，重复执行不会影响数据
 ```shell
 ./u8t-linux-amd64 --dsn="root:w8t.123@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local"
 ✅ 正在使用DSN连接数据库: root:****@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local
