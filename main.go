@@ -66,6 +66,14 @@ func main() {
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
+	processRuleTemplate(db)
+	processAlertRule(db)
+	processCalendar(db)
+}
+
+func processAlertRule(db *gorm.DB) {
+	fmt.Println("📣 开始刷告警规则数据结构")
+
 	var alertRules []models.AlertRule
 	db.Where("datasource_type IN (?)", []string{"prometheus", "victoriametrics"}).
 		Find(&alertRules)
@@ -91,12 +99,80 @@ func main() {
 
 		if err != nil {
 			fmt.Printf("❌ 更新失败，ruleId: %s, error: %v\n", alertRule.RuleId, err)
-		} else {
-			fmt.Printf("✅ 已更新 PrometheusConfig，ruleId: %s\n", alertRule.RuleId)
 		}
 	}
 
 	fmt.Println("✅ 所有规则更新完成")
+}
+
+func processRuleTemplate(db *gorm.DB) {
+	fmt.Println("📣 开始刷规则模版数据结构")
+
+	var ruleTemplates []models.RuleTemplate
+	db.Where("datasource_type IN (?)", []string{"prometheus", "victoriametrics"}).
+		Find(&ruleTemplates)
+	fmt.Println("📊 查询到的记录数量：", len(ruleTemplates))
+
+	for i := range ruleTemplates {
+		ruleTemplate := &ruleTemplates[i]
+
+		for i := range ruleTemplate.PrometheusConfig.Rules {
+			ruleTemplate.PrometheusConfig.Rules[i].ForDuration = ruleTemplate.PrometheusConfig.ForDuration
+		}
+
+		configBytes, err := json.Marshal(ruleTemplate.PrometheusConfig)
+		if err != nil {
+			fmt.Printf("❌ JSON 序列化失败， error: %v\n", err)
+			continue
+		}
+
+		err = db.Model(&models.RuleTemplate{}).
+			Where("rule_name = ?", ruleTemplate.RuleName).
+			Update("prometheus_config", configBytes).
+			Error
+
+		if err != nil {
+			fmt.Printf("❌ 更新失败，error: %v\n", err)
+		}
+	}
+
+	fmt.Println("✅ 所有规则模版更新完成")
+}
+
+func processCalendar(db *gorm.DB) {
+	fmt.Println("📣 开始刷值班表数据结构")
+
+	var dutys []models.DutySchedule
+	db.Model(&models.DutySchedule{}).Find(&dutys)
+
+	fmt.Println("📊 查询到的记录数量：", len(dutys))
+
+	for i := range dutys {
+		duty := &dutys[i]
+		duty.Users = []models.DutyUser{
+			{
+				UserId:   duty.UserId,
+				Username: duty.Username,
+			},
+		}
+
+		bytes, err := json.Marshal(duty.Users)
+		if err != nil {
+			fmt.Printf("❌ JSON 序列化失败，error: %v\n", err)
+			continue
+		}
+
+		err = db.Model(&models.DutySchedule{}).
+			Where("duty_id = ? and time = ?", duty.DutyId, duty.Time).
+			Update("users", bytes).
+			Error
+
+		if err != nil {
+			fmt.Printf("❌ 更新失败 error: %v\n", err)
+		}
+	}
+
+	fmt.Println("✅ 所有值班表更新完成")
 }
 
 // maskPassword 隐藏 DSN 中的密码部分
