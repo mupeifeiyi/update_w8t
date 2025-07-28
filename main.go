@@ -149,6 +149,9 @@ func processCalendar(db *gorm.DB) {
 
 	for i := range dutys {
 		duty := &dutys[i]
+		if duty.UserId == "" && duty.Username == "" {
+			continue
+		}
 		duty.Users = []models.DutyUser{
 			{
 				UserId:   duty.UserId,
