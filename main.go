@@ -82,6 +82,10 @@ func processAlertRule(db *gorm.DB) {
 	for i := range alertRules {
 		alertRule := &alertRules[i]
 
+		if alertRule.PrometheusConfig.ForDuration <= 0 {
+			continue
+		}
+
 		for i := range alertRule.PrometheusConfig.Rules {
 			alertRule.PrometheusConfig.Rules[i].ForDuration = alertRule.PrometheusConfig.ForDuration
 		}
@@ -115,6 +119,10 @@ func processRuleTemplate(db *gorm.DB) {
 
 	for i := range ruleTemplates {
 		ruleTemplate := &ruleTemplates[i]
+
+		if ruleTemplate.PrometheusConfig.ForDuration <= 0 {
+			continue
+		}
 
 		for i := range ruleTemplate.PrometheusConfig.Rules {
 			ruleTemplate.PrometheusConfig.Rules[i].ForDuration = ruleTemplate.PrometheusConfig.ForDuration
