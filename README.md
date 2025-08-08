@@ -38,7 +38,7 @@ $ ./u8t-linux-amd64 -h
 示例：
 ./u8t-linux-amd64 --dsn="root:w8t.123@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local"
 ```
-部署时没有修改任何配置，可以直接复制示例进行刷数据库，重复执行不会影响数据
+部署时若没有对数据库信息做任何修改，可以直接复制示例进行刷数据库，重复执行不会影响数据
 ```shell
 ./u8t-linux-amd64 --dsn="root:w8t.123@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local"
 ✅ 正在使用DSN连接数据库: root:****@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local
