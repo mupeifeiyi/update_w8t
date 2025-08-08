@@ -12,6 +12,8 @@
 
 更新前后端后，页面表现如下：
 <img width="1412" height="497" alt="截屏2025-07-17 22 49 57" src="https://github.com/user-attachments/assets/da0e5523-c863-470c-b754-17cbb4cfffff" />
+<img width="1473" height="624" alt="bfc4160a-0ed5-4bcd-bfb7-f2920017852f" src="https://github.com/user-attachments/assets/5c3015ba-dc75-4b79-8df9-676b18e03bfe" />
+
 
 # 使用方法
 以compose为例的升级步骤：
