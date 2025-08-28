@@ -9,7 +9,7 @@ import (
 
 // 修改prom规则支持不同告警级别拥有不同的持续时间
 func ProcessAlertRule(db *gorm.DB) {
-	fmt.Println("📣 开始刷告警规则数据结构")
+	fmt.Println("📣 开始刷metrics告警规则数据结构")
 
 	var alertRules []models.AlertRule
 	db.Where("datasource_type IN (?)", []string{"prometheus", "victoriametrics"}).
@@ -43,11 +43,11 @@ func ProcessAlertRule(db *gorm.DB) {
 		}
 	}
 
-	fmt.Println("✅ 所有规则更新完成")
+	fmt.Println("✅ 所有metrics告警规则表更新完成")
 }
 
 func ProcessRuleTemplate(db *gorm.DB) {
-	fmt.Println("📣 开始刷规则模版数据结构")
+	fmt.Println("📣 开始刷metrics告警规则模版数据结构")
 
 	var ruleTemplates []models.RuleTemplate
 	db.Where("datasource_type IN (?)", []string{"prometheus", "victoriametrics"}).
@@ -81,7 +81,7 @@ func ProcessRuleTemplate(db *gorm.DB) {
 		}
 	}
 
-	fmt.Println("✅ 所有规则模版更新完成")
+	fmt.Println("✅ 所有metrics告警规则模版更新完成")
 }
 
 func ProcessCalendar(db *gorm.DB) {
@@ -125,7 +125,7 @@ func ProcessCalendar(db *gorm.DB) {
 
 // 修改阿里云SLS数据库格式，支持多个logstore
 func ProcessAliSLSConfigAlertRule(db *gorm.DB) {
-	fmt.Println("📣 开始阿里云SLS配置数据结构升级")
+	fmt.Println("📣 开始刷阿里云SLS配置数据结构")
 
 	// 定义新结构体
 	type NewSLSConfig struct {
@@ -170,5 +170,5 @@ func ProcessAliSLSConfigAlertRule(db *gorm.DB) {
 		}
 	}
 
-	fmt.Println("✅ 所有阿里云SLS规则更新完成")
+	fmt.Println("✅ 所有阿里云SLS规则配置数据结更新完成")
 }
