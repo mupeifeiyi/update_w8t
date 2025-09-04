@@ -69,6 +69,7 @@ func main() {
 	utils.ProcessAlertRule(db)
 	utils.ProcessCalendar(db)
 	utils.ProcessAliSLSConfigAlertRule(db)
+	utils.ProcessSLSRuleTemplate(db)
 
 }
 
