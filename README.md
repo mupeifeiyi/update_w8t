@@ -40,31 +40,37 @@ $ ./u8t-linux-amd64 -h
 ✅ 正在使用DSN连接数据库: root:****@tcp(127.0.0.1:3306)/watchalert?charset=utf8mb4&parseTime=True&loc=Local
 📣 开始刷metrics告警规则模版数据结构
 
-2025/08/29 00:46:08 /Users/feiyi/update_w8t/utils/utils.go:54
-[4.574ms] [rows:62] SELECT * FROM `rule_templates` WHERE datasource_type IN ('prometheus','victoriametrics')
+2025/09/04 23:37:20 /Users/feiyi/update_w8t/utils/utils.go:54
+[4.504ms] [rows:62] SELECT * FROM `rule_templates` WHERE datasource_type IN ('prometheus','victoriametrics')
 📊 查询到的记录数量： 62
 ...
 ✅ 所有metrics告警规则模版更新完成
 📣 开始刷metrics告警规则数据结构
 
-2025/08/29 00:46:09 /Users/feiyi/update_w8t/utils/utils.go:16
-[1.132ms] [rows:4] SELECT * FROM `alert_rules` WHERE datasource_type IN ('prometheus','victoriametrics')
-📊 查询到的记录数量： 4
-...
-2025/08/29 00:46:09 /Users/feiyi/update_w8t/utils/utils.go:38
-[7.252ms] [rows:1] UPDATE `alert_rules` SET `prometheus_config`='{"promQL":"round(max((node_filesystem_size_bytes{fstype=~\"ext.?|xfs\",}-node_filesystem_free_bytes{fstype=~\"ext.?|xfs\",}) *100/(node_filesystem_avail_bytes {fstype=~\"ext.?|xfs\",}+(node_filesystem_size_bytes{fstype=~\"ext.?|xfs\",}-node_filesystem_free_bytes{fstype=~\"ext.?|xfs\",})))by(ecs_cname,instance))","annotations":"节点：${instance}，磁盘使用率过高，当前：${value}%，磁盘空间不足会导致文件无法写入、新日志无法记录，甚至可能ion":60,"rules":[{"forDuration":60,"severity":"P0","expr":"\u003e85"}]}' WHERE rule_id = 'a-d1sgbf5p1r5s73e0men0'
+2025/09/04 23:37:21 /Users/feiyi/update_w8t/utils/utils.go:16 json: cannot unmarshal array into Go struct field AliCloudSLSConfig.logstore of type string
+[0.950ms] [rows:1] SELECT * FROM `alert_rules` WHERE datasource_type IN ('prometheus','victoriametrics')
+📊 查询到的记录数量： 1
 ✅ 所有metrics告警规则表更新完成
 📣 开始刷值班表数据结构
-...
+
+2025/09/04 23:37:21 /Users/feiyi/update_w8t/utils/utils.go:91
+[0.462ms] [rows:0] SELECT * FROM `duty_schedules`
 📊 查询到的记录数量： 0
 ✅ 所有值班表更新完成
-📣 开始刷阿里云SLS配置数据结构
+📣 开始刷告警规则中logstore的数据结构
 
-2025/08/29 00:46:09 /Users/feiyi/update_w8t/utils/utils.go:140
-[0.987ms] [rows:1] SELECT * FROM `alert_rules` WHERE datasource_type = 'AliCloudSLS'
-📊 查询到的记录数量： 1
+2025/09/04 23:37:21 /Users/feiyi/update_w8t/utils/utils.go:139 json: cannot unmarshal array into Go struct field AliCloudSLSConfig.logstore of type string; json: cannot unmarshal array into Go struct field AliCloudSLSConfig.logstore of type string
+[0.450ms] [rows:2] SELECT * FROM `alert_rules`
+📊 查询到的记录数量： 2
+...
+✅ 所有告警规则中logstore的数据结构更新完成
+📣 开始刷告警规则模版中logstore的数据结构
 
-2025/08/29 00:46:09 /Users/feiyi/update_w8t/utils/utils.go:167
-[4.511ms] [rows:1] UPDATE `alert_rules` SET `ali_cloud_sls_config`='{"project":"12","logstore":["12"],"logQL":"123","logScope":1}' WHERE rule_id = 'a-d2o5sem2uivc739qrolg'
-✅ 所有阿里云SLS规则配置数据结更新完成
+2025/09/04 23:37:21 /Users/feiyi/update_w8t/utils/utils.go:188
+[1.494ms] [rows:80] SELECT * FROM `rule_templates`
+📊 查询到的记录数量： 80
+...
+2025/09/04 23:37:21 /Users/feiyi/update_w8t/utils/utils.go:215
+[4.089ms] [rows:1] UPDATE `rule_templates` SET `ali_cloud_sls_config`='{"project":"","logstore":[""],"logQL":"","logScope":0}' WHERE rule_name = '服务器磁盘使用率监控'
+✅ 所有告警规则模版中的logstore的数据结构更新完成
 ```
