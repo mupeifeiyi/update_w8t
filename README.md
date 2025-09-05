@@ -12,6 +12,7 @@
 2. 支持同一天多人值班（v3.6.0-beat.2）
 <img width="1473" height="624" alt="bfc4160a-0ed5-4bcd-bfb7-f2920017852f" src="https://github.com/user-attachments/assets/5c3015ba-dc75-4b79-8df9-676b18e03bfe" />
 3. 阿里云SLS数据源的告警规则支持配置多个logstore（v3.6.0）
+<img width="1391" height="554" alt="截屏2025-09-05 21 27 58" src="https://github.com/user-attachments/assets/24175a2b-0bf6-4430-aba0-8c28dd6b2818" />
 
 
 # 使用方法
